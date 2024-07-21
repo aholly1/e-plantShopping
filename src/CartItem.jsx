@@ -1,27 +1,35 @@
+{/* React Framework, Importing hooks, Slices, & CSS DOC */}
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
+{/*Funcitons required for Shopping Cart functionality */}
+
 const CartItem = ({ onUpdateCart, onContinueShopping }) => {
+  {/*Variable that retrieves the cart item from store*/}
   const cart = useSelector(state => state.cart.items);
+  {/*init dispach hook*/}
   const dispatch = useDispatch();
 
+  {/*Calculates the total cost by retrieving the items quanity from the item list*/}
     const calculateTotalAmount = () => {
        return cartItems.reduce((total, item) => total + (parseFloat(item.cost.replace('$', '')) * item.quantity), 0).toFixed(2);
    };
 
-
+{/*returns the total cost by retrieving the items quantity and appending the '$'*/}
    const calculateTotalCost = (cost, quantity) => {
        return (parseFloat(cost.replace('$', '')) * quantity).toFixed(2);
    };
 
-
+{/*dispaches an action that finds the requested item in the items list and increments its quantity*/}
    const handleIncrement = (item) => {
        dispatch(updateQuantity({ name: item.name, quantity: 1 }));
    };
 
-
+{/*uses an if else statement that if the requested item's quantity is greater than one dispaches an action that decrements the items quantity
+else removes the item from the list of items.
+*/}
    const handleDecrement = (item) => {
        if (item.quantity > 1) {
            dispatch(updateQuantity({ name: item.name, quantity: -1 }));
@@ -30,18 +38,21 @@ const CartItem = ({ onUpdateCart, onContinueShopping }) => {
        }
    };
 
-
+{/*removes an item from the list of items*/}
    const handleRemove = (item) => {
        dispatch(removeItem({ name: item.name }));
    };
 
-
+{/*Will implement when I have time*/}
    const handleCheckout = () => {
        alert('Functionality to be added for future reference');
    };
 
 
+{/*return that creates the cart:
+basically traverses though the list of items that are inside the cart and creates components for each item.
 
+*/}
   return (
     <div className="cart-container">
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
