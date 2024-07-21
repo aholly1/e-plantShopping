@@ -1,16 +1,16 @@
 import React, { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from './CartSlice';
-import './ProductList.css'; // Import CSS file
-
+import './ProductList.css'; 
 import CartItem from './CartItem';
 import AboutUs from './AboutUs';
+
 function ProductList() {
     const dispatch = useDispatch();
-    const [showCart, setShowCart] = useState(false); // State to control the visibility of the Cart component
-    const [addedToCart, setAddedToCart] = useState({}); // State to track which products are added to the cart
-    const cartItems = useSelector((state) => state.cart.items); // Get cart items from Redux store
-    const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+    const [showCart, setShowCart] = useState(false);
+    const [addedToCart, setAddedToCart] = useState({}); 
+    const cartItems = useSelector((state) => state.cart.items); 
+    const [showPlants, setShowPlants] = useState(false); 
 
     const plantsArray = [
         {
@@ -239,49 +239,47 @@ function ProductList() {
     fontSize: '30px',
     textDecoration: 'none',
    }
-     // Function to calculate total quantity of items in cart
+     const handleAddToCart = (product) => {
+        dispatch(addItem(product));
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [product.name]: true, 
+        }));
+    };
      const calculateTotalQuantity = () => {
         return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
     };
 
-    // State to hold total quantity of items in cart
     const [totalQuantity, setTotalQuantity] = useState(calculateTotalQuantity());
     useEffect(() => {
-        // Update total quantity whenever cartItems change
         setTotalQuantity(calculateTotalQuantity());
     }, [cartItems]);
 
 
-    const handleAddToCart = (product) => {
-        dispatch(addItem(product));
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-        }));
-    };
-
     const handlePlantsClick = (e) => {
         e.preventDefault();
-        setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
-        setShowCart(false); // Hide the cart when navigating to About Us
+        setShowPlants(true); 
+        setShowCart(false); 
     };
 
     const handleHomeClick = (e) => {
         e.preventDefault();
 
-        setShowAboutUs(false); // Set showAboutUs to false when "Home" link is clicked
-        setShowCart(false); // Hide the cart when navigating back to Home
+        setShowAboutUs(false); 
+        setShowCart(false); 
     };
-
-    const handleCartClick = (e) => {
-        e.preventDefault();
-        setShowCart(true); // Set showCart to true when cart icon is clicked
-        setShowAboutUs(false); // Hide the About Us page when opening the cart
-    };
-    const handleContinueShopping = (e) => {
+    
+      const handleContinueShopping = (e) => {
         e.preventDefault();
         setShowCart(false);
       };
+    
+    const handleCartClick = (e) => {
+        e.preventDefault();
+        setShowCart(true); 
+        setShowAboutUs(false); 
+    };
+  
       return (
         <div>
         <div className="navbar">
@@ -306,7 +304,6 @@ function ProductList() {
 
         {!showCart? (
             <div className="product-grid">
-                {/* Map through the products array to display product cards */}
                 {plantsArray.map((category, index) => (
                     <div key={index}>
                         <h1 className='plantname_heading'><div className="plant_heading">{category.category}</div></h1>
