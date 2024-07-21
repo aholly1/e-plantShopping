@@ -1,3 +1,4 @@
+{/*Imports React framework, hooks from redux, & CSS and JS files.*/}
 import React, { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from './CartSlice';
@@ -5,14 +6,23 @@ import './ProductList.css';
 import CartItem from './CartItem';
 import AboutUs from './AboutUs';
 
+{/*Functions and CSS for the ProductList*/}
 function ProductList() {
+    {/*Dispach Hook*/}
     const dispatch = useDispatch();
+    {/*Hook that retrieves the Cart Items from the store*/}
     const cartItems = useSelector((state) => state.cart.items); 
+    {/*Use state hook that initilizes the showCart var*/}
     const [showCart, setShowCart] = useState(false);
+    {/*Use state hook that initilizes the showPlants var*/}
     const [showPlants, setShowPlants] = useState(false); 
+    {/*Use state hook that initilizes the addedToCart var*/}
     const [addedToCart, setAddedToCart] = useState({}); 
 
-
+    {/*
+    The various plants that are displayed on the domain including:
+    Categories for the plants, the individual plants that fall in each category, the name, image, discription, and cost of the specific plant.
+    */}
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -220,6 +230,7 @@ function ProductList() {
             ]
         }
     ];
+    {/*Basic CSS that was given*/}
    const styleObj={
     backgroundColor: '#4CAF50',
     color: '#fff!important',
@@ -240,6 +251,7 @@ function ProductList() {
     fontSize: '30px',
     textDecoration: 'none',
    }
+    {/*Function that takes in a specified plant obj and dispaches an action to add that product into the cart*/}
      const handleAddToCart = (product) => {
         dispatch(addItem(product));
         setAddedToCart((prevState) => ({
@@ -247,40 +259,52 @@ function ProductList() {
             [product.name]: true, 
         }));
     };
+    {/*Function that has a ternary that says if items exist in the cart it returns the total number of items inside, or returns zero*/}
      const calculateTotalQuantity = () => {
         return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
     };
-
+    {/*A Use State hook that initilizes the totalQuantity var taken from the calculateTotalQuantity function*/}
     const [totalQuantity, setTotalQuantity] = useState(calculateTotalQuantity());
+    {/*Use effect hook that dynamically changes the cartItems every tiem the cartItems is changed*/}
     useEffect(() => {
         setTotalQuantity(calculateTotalQuantity());
     }, [cartItems]);
 
-
+    {/*Function that sets the showCart var to false and the ShowPlants var to true*/}
     const handlePlantsClick = (e) => {
         e.preventDefault();
         setShowPlants(true); 
         setShowCart(false); 
     };
-
+    
+    {/*Function that sets the ShowAboutUs and ShowCart to false*/}
     const handleHomeClick = (e) => {
         e.preventDefault();
-
         setShowAboutUs(false); 
         setShowCart(false); 
     };
     
+    {/*Function that sets the ShowCart var to false*/}
       const handleContinueShopping = (e) => {
         e.preventDefault();
         setShowCart(false);
       };
     
+    {/*Function that sets the ShowCart var to true and the ShowAboutUs var to false*/}
     const handleCartClick = (e) => {
         e.preventDefault();
         setShowCart(true); 
         setShowAboutUs(false); 
     };
-  
+    
+      {/*
+      Initilizes the documents components:
+      The top of the document that has onClick() events that will take you to the various other pages of the document
+      The various products, where I iterate though the plant objects and create componenets for each object.
+      ==> each object can be added to the cart and the cart button is dissabled using a ternary after the object has been
+          added to the cart
+      */}
+    
       return (
         <div>
         <div className="navbar">
