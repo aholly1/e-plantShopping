@@ -1,4 +1,14 @@
+{/*imports slice tool from the redux toolkit*/}
 import { createSlice } from '@reduxjs/toolkit';
+
+{/*
+Cart slice funciton that initlizes the cart with an empty list of items
+
+The reducers include:
+addItem reducer => Checks if the item exists in the array of items if so, increments the quanity by 1, else adds (pushes) the item into the array.
+removeItem reducer => finds the item and filters it out
+updateQuanity reducer => basic if statement that updates the quanity of the object if it exists in the items array.
+*/}
 
 export const CartSlice = createSlice({
     name: 'cart',
