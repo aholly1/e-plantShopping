@@ -7,10 +7,11 @@ import AboutUs from './AboutUs';
 
 function ProductList() {
     const dispatch = useDispatch();
-    const [showCart, setShowCart] = useState(false);
-    const [addedToCart, setAddedToCart] = useState({}); 
     const cartItems = useSelector((state) => state.cart.items); 
+    const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); 
+    const [addedToCart, setAddedToCart] = useState({}); 
+
 
     const plantsArray = [
         {
